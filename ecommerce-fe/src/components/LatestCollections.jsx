@@ -28,6 +28,8 @@ const LatestCollections = () => {
   }, []);
 
   return (
+    <>
+ 
     <div className="container mx-auto px-4 py-8">
      
       <h2 className="prata-regular text-2xl md:text-3xl font-bold text-gray-800 text-center mb-4">
@@ -65,6 +67,7 @@ const LatestCollections = () => {
         !loading && <p className="text-center text-gray-600">No collections found.</p>
       )}
     </div>
+    </>
   );
 };
 

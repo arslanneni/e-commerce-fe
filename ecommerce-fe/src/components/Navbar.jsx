@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { assets } from '../assets/assets';
 import { Link, NavLink } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Import js-cookie
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const userRole = Cookies.get('Roles'); 
+  
   return (
     <nav className="bg-white shadow-sm">
       <div className="container mx-auto flex items-center justify-between py-4 px-6 font-medium relative">
@@ -76,6 +79,19 @@ const Navbar = () => {
               CONTACT
             </NavLink>
           </li>
+
+          {/* Conditionally Render Dashboard */}
+          {userRole === 'Admin' && (
+            <li>
+              <NavLink
+                to="/dashboard"
+                className="block px-4 py-2 text-sm lg:text-base text-gray-700 hover:text-gray-900 transition"
+                activeClassName="font-semibold text-gray-900"
+              >
+                DASHBOARD
+              </NavLink>
+            </li>
+          )}
         </ul>
 
         {/* Right Section */}

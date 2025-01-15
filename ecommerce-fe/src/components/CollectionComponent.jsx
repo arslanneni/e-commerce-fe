@@ -51,7 +51,7 @@ const CollectionComponent = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Main layout */}
-      {JSON.stringify(products[0].category.name)}
+    
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left Filters Section */}
         <div className="w-full md:w-1/4">
