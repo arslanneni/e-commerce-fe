@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const CollectionComponent = () => {
+    const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -21,6 +23,11 @@ const CollectionComponent = () => {
       console.error('Error fetching products:', error);
     }
   };
+  const handleProductClick =(id) => {
+    setTimeout(() => {
+      navigate(`/product/${id}`);
+    }, 2000);
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -119,7 +126,9 @@ const CollectionComponent = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
-                <div key={product.id} className="border border-gray-300 shadow-lg rounded-lg p-4">
+                <div key={product.id} className="border border-gray-300 shadow-lg rounded-lg p-4"
+                onClick={ () => handleProductClick(product.id)}
+                >
                   <img
                     src={product.image_url}
                     alt={product.name}

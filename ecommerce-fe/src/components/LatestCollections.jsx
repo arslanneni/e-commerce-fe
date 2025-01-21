@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const LatestCollections = () => {
+  const navigate = useNavigate();
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,6 +24,13 @@ const LatestCollections = () => {
       setLoading(false);
     }
   };
+
+
+  const handleProductClick =(id) => {
+    setTimeout(() => {
+      navigate(`/product/${id}`);
+    }, 2000);
+  }
 
   useEffect(() => {
     fetchLatestCollections();
@@ -51,7 +60,9 @@ const LatestCollections = () => {
       {collections.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {collections.map((collection) => (
-            <div key={collection.id} className="border border-gray-300 shadow-lg rounded-lg p-6">
+            <div key={collection.id} className="border border-gray-300 shadow-lg rounded-lg p-6" 
+            onClick={ () =>handleProductClick(collection.id)}
+            >
               <img
                 src={collection.image_url} 
                 alt={collection.name}

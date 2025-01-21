@@ -43,6 +43,7 @@ const LoginComponent = () => {
         toast.success('Login Successful!');
         Cookies.set('authToken', data.data.token, { expires: 7, secure: true });
         Cookies.set('Roles', data.data.user.role_id === 1?"Admin" : "User" , { expires: 7, secure: true });
+        Cookies.set('ID', data.data.user.id , { expires: 7, secure: true });
 
         setTimeout(() => {
           window.location.href = '/'; 
