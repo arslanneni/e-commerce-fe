@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'; // Optional for debugging
 import Home from './pages/Home';
 import Collection from './pages/Collection';
 import About from './pages/About';
@@ -12,42 +14,50 @@ import Orders from './pages/Orders';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Signup from './pages/Signup';
-import 'react-toastify/dist/ReactToastify.css';
 import DashboardLayout from './components/dashboardcomponents/DashboardLayout';
 import DashboardProducts from './pages/DashboardProducts';
 import DashboardCategories from './pages/DashboardCategories';
 import DashboardUsers from './pages/DashboardUsers';
+import 'react-toastify/dist/ReactToastify.css';
 
-// Dashboard Components
-
+// Create a QueryClient instance
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <>
-      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]"></div>
-      <Navbar />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/product/:productid" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/placeorder" element={<PlaceOrder />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/signup" element={<Signup />} />
+    <QueryClientProvider client={queryClient}>
+      <div className="flex flex-col min-h-screen">
+        {/* Content above the footer */}
+        <div className="flex-grow">
+          <Navbar />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/collection" element={<Collection />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/product/:productid" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/placeorder" element={<PlaceOrder />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/signup" element={<Signup />} />
 
-        {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="products" element={<DashboardProducts />} />
-          <Route path="categories" element={<DashboardCategories />} />
-          <Route path="users" element={<DashboardUsers />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </>
+            {/* Dashboard Routes */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route path="products" element={<DashboardProducts />} />
+              <Route path="categories" element={<DashboardCategories />} />
+              <Route path="users" element={<DashboardUsers />} />
+            </Route>
+          </Routes>
+        </div>
+        {/* Sticky Footer */}
+        <Footer />
+      </div>
+
+      {/* Optional Devtools */}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 };
 

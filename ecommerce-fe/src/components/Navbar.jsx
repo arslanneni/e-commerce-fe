@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
-import { assets } from '../assets/assets';
-import { Link, NavLink } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Import js-cookie
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import Cookies from "js-cookie"; // Import js-cookie
+import { Link, NavLink } from "react-router-dom";
+import { assets } from "../assets/assets";
+
+const fetchCartItems = async () => {
+  const userId = Cookies.get("ID");
+  if (!userId) return [];
+  const response = await fetch(
+    `http://localhost:5000/cart/getCartItemsByUserID/${userId}`
+  );
+  const data = await response.json();
+  if (data.status === "SUCCESS" && Array.isArray(data.data)) {
+    return data.data;
+  } else {
+    return [];
+  }
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const userRole = Cookies.get('Roles'); 
-  
+  const userRole = Cookies.get("Roles");
+
+  // Use React Query to fetch cart items
+  const { data: cartItems = [], isLoading } = useQuery(
+    ["cart-items"],
+    fetchCartItems
+  );
+
+  const cartItemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+
   return (
     <nav className="bg-white shadow-sm">
       <div className="container mx-auto flex items-center justify-between py-4 px-6 font-medium relative">
@@ -40,7 +63,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <ul
           className={`${
-            isMobileMenuOpen ? 'block' : 'hidden'
+            isMobileMenuOpen ? "block" : "hidden"
           } lg:flex lg:flex-1 lg:justify-center lg:gap-8 lg:items-center lg:static absolute top-16 left-0 w-full bg-white z-20 lg:bg-transparent transition-all`}
         >
           <li>
@@ -81,7 +104,7 @@ const Navbar = () => {
           </li>
 
           {/* Conditionally Render Dashboard */}
-          {userRole === 'Admin' && (
+          {userRole === "Admin" && (
             <li>
               <NavLink
                 to="/dashboard"
@@ -128,7 +151,7 @@ const Navbar = () => {
                 Orders
               </NavLink>
               <button
-                onClick={() => console.log('Logout clicked')}
+                onClick={() => console.log("Logout clicked")}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
               >
                 Logout
@@ -140,7 +163,7 @@ const Navbar = () => {
           <Link to="/cart" className="relative">
             <img src={assets.cart_icon} className="w-5 min-w-5" alt="Cart" />
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-              3
+              {isLoading ? "..." : cartItemCount}
             </span>
           </Link>
         </div>
