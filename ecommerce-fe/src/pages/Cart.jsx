@@ -1,7 +1,6 @@
 import React from "react";
 import CartItem from "../components/CartItemComponent";
 import { cartReducer, CartReducer } from "../constants/CartReducer/CartReducer";
-import { CART_REDUCER_CONSTANTS } from "../constants/CartReducer/CartConstants";
 import { useCartItems } from "../constants/CartReducer/ReactQuery";
 
 const Cart = () => {
@@ -63,12 +62,7 @@ const Cart = () => {
               )
               .toFixed(2)}
           </div>
-          <button
-            onClick={handleProceedToOrder}
-            className="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700"
-          >
-            Proceed to Order
-          </button>
+
         </div>
       )}
     </div>

@@ -65,14 +65,20 @@ export function CartReducer(state, action) {
 
     // New case: Remove an item from the cart
     case "REMOVE_ITEM": {
-      const filteredCartItems = state.cartInfo.cartItems.filter(
-        (item) => item.id !== action.payload
+      const idToRemove = action.payload;
+      const removedItem = state.cartInfo.cartItems.find(
+        (item) => item.id === idToRemove
       );
+
+      if (!removedItem) return state; // If item not found, return state as is.
+
       return {
         ...state,
         cartInfo: {
           ...state.cartInfo,
-          cartItems: filteredCartItems,
+          cartItems: state.cartInfo.cartItems.filter(
+            (item) => item.id !== idToRemove
+          ),
         },
       };
     }

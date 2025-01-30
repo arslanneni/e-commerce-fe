@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools'; // Optional for debugging
+import { ReactQueryDevtools } from 'react-query/devtools';
 import Home from './pages/Home';
 import Collection from './pages/Collection';
 import About from './pages/About';
@@ -19,6 +19,7 @@ import DashboardProducts from './pages/DashboardProducts';
 import DashboardCategories from './pages/DashboardCategories';
 import DashboardUsers from './pages/DashboardUsers';
 import 'react-toastify/dist/ReactToastify.css';
+import MyOrders from './components/MyOrders';
 
 // Create a QueryClient instance
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/placeorder" element={<PlaceOrder />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/myorders" element={<MyOrders />} />
 
             {/* Dashboard Routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>
