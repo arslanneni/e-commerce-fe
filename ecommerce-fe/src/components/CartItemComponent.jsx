@@ -74,7 +74,7 @@ const CartItem = ({ cartRed, cartDispatch }) => {
     }
   }, [queryClient]);
 
-  // Save shipping details & create order
+ 
   const handleSaveShippingDetails = async () => {
     const orderPayload = {
       user_id: parseInt(Cookies.get("ID")),
@@ -155,7 +155,7 @@ const CartItem = ({ cartRed, cartDispatch }) => {
 
   return (
     <>
-    {JSON.stringify(shippingDetails)}
+  =
       {cartItems.map((item) => (
         <div key={item.id} className="flex items-center border-b border-gray-300 py-4">
           <div className="w-24 h-24">
